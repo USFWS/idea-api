@@ -11,15 +11,14 @@ module.exports.createToken = function(user) {
     act: user.accountType
   };
 
-  return jwt.encode(payload, config.TOKEN_SECRET);
+  return jwt.encode(payload, sails.config.TOKEN_SECRET);
 };
 
 module.exports.verifyToken = function(token) {
-  return jwt.decode(token, config.TOKEN_SECRET);
+  return jwt.decode(token, sails.config.TOKEN_SECRET);
 };
 
 module.exports.decodeToken = function(token) {
-  console.log(token);
   var parts = token.split('.');
 
   if (parts.length !== 3) {

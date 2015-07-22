@@ -1,7 +1,6 @@
 var moment = require('moment');
 
 module.exports = function (req, res, next) {
-  console.log(req.headers);
   var token;
 
   if (!(req.headers && req.headers.authorization)) {
@@ -11,7 +10,6 @@ module.exports = function (req, res, next) {
   }
   else {
     var header = req.headers.authorization.split(' ');
-    console.log(header);
     if (header.length == 2) {
       var scheme = header[0];
       var credentials = header[1];
