@@ -19,6 +19,7 @@ module.exports.verifyToken = function(token) {
 };
 
 module.exports.decodeToken = function(token) {
+  console.log(token);
   var parts = token.split('.');
 
   if (parts.length !== 3) {
