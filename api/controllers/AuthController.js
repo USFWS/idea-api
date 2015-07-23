@@ -5,33 +5,35 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 var qs = require('qs');
+var google = require('googleapis');
 
 module.exports = {
   google: function(req, res) {
-    // https://developers.google.com/identity/protocols/OpenIDConnect#discovery
-    var tokenEndpoint =
+    var CLIENT_ID = req.body.clientId,
+      CLIENT_SECRET = sails.config.GOOGLE_SECRET,
+      REDIRECT_URI = req.body.redirectUri,
+      scopes = ['https://www.googleapis.com/auth/plus.me'],
+      plus = google.plus('v1'),
+      OAuth2 = google.auth.OAuth2;
+
+    var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI),
+      url = oauth2Client.generateAuthUrl({ scope: scopes });
 
 
-    var params = {
-      form: {
-        code: req.body.code,
-        client_id: req.body.clientId,
-        client_secret: sails.config.GOOGLE_SECRET,
-        redirect_uri: req.body.redirectUri,
-        grant_type: 'authorization_code'
-      },
-      json: true
-    };
+    google.options({ auth: oauth2Client });
 
-    google.token(params, function(err, r, body) {
-      if(err) res.negotiate(err);
+    oauth2Client.getToken(req.body.code, function (err, tokens) {
+      if (err) return res.negotiate(err);
+      oauth2Client.setCredentials(tokens);
 
-      if (req.headers.authorization) {
-        //User is already logged in -- Link the accounts
-      } else {
+      plus.people.get({ userId: 'me' }, function (err, profile) {
+        if (err) return res.negotiate(err);
+        if (profile.domain != 'fws.gov' ) {
+          return res.forbidden('You must be a Fish and Wildlife Employee to enter.');
+        }
+        console.log(profile);
         // Find or Create a user account
-        var token = sailsTokenAuth.decodeToken(body.id_token);
-        User.findOne({ googleId: token.payload.sub }).exec(function(err, foundUser) {
+        User.findOne({ googleId: profile.id }).exec(function(err, foundUser) {
           if (err) return res.negotiate(err);
           if (foundUser) {
             var jwt = sailsTokenAuth.createToken(foundUser);
@@ -39,9 +41,10 @@ module.exports = {
           } else {
 
             var params = {
-              googleId: token.payload.sub,
-              email: token.payload.email,
-              accountType: accountType
+              googleId: profile.id,
+              email: profile.emails[0].value,
+              name: profile.displayName,
+              picture: profile.image.url
             };
 
             User.create(params).exec(function (err, newUser) {
@@ -51,7 +54,7 @@ module.exports = {
             });
           }
         });
-      }
+      });
     });
   }
 };
