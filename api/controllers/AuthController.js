@@ -5,24 +5,25 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 var qs = require('qs');
-var config = require('../../config/env/development');
-var request = require('request');
 
 module.exports = {
   google: function(req, res) {
     // https://developers.google.com/identity/protocols/OpenIDConnect#discovery
-    var tokenEndpoint = 'https://www.googleapis.com/oauth2/v4/token';
+    var tokenEndpoint =
 
-    //https://developers.google.com/identity/protocols/OpenIDConnect#exchangecode
+
     var params = {
-      code: req.body.code,
-      client_id: req.body.clientId,
-      client_secret: sails.config.GOOGLE_SECRET,
-      redirect_uri: req.body.redirectUri,
-      grant_type: 'authorization_code'
+      form: {
+        code: req.body.code,
+        client_id: req.body.clientId,
+        client_secret: sails.config.GOOGLE_SECRET,
+        redirect_uri: req.body.redirectUri,
+        grant_type: 'authorization_code'
+      },
+      json: true
     };
 
-    request.post({ url: tokenEndpoint, form: params, json: true }, function(err, r, body) {
+    google.token(params, function(err, r, body) {
       if(err) res.negotiate(err);
 
       if (req.headers.authorization) {
@@ -37,7 +38,6 @@ module.exports = {
             return res.send({ token: jwt, user: foundUser });
           } else {
 
-            var accountType = token.payload.hd == 'fws.gov' ? 'editor' : 'viewer';
             var params = {
               googleId: token.payload.sub,
               email: token.payload.email,
