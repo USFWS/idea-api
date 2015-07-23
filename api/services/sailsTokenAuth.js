@@ -8,7 +8,8 @@ module.exports.createToken = function(user) {
     iat: moment().unix(),
     iss: 'www.fws.gov',
     sub: user.id,
-    act: user.accountType
+    act: user.type,
+    name: user.name
   };
 
   return jwt.encode(payload, sails.config.TOKEN_SECRET);

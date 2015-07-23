@@ -19,7 +19,6 @@ module.exports = {
     var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI),
       url = oauth2Client.generateAuthUrl({ scope: scopes });
 
-
     google.options({ auth: oauth2Client });
 
     oauth2Client.getToken(req.body.code, function (err, tokens) {
@@ -36,7 +35,7 @@ module.exports = {
           if (err) return res.negotiate(err);
           if (foundUser) {
             var jwt = sailsTokenAuth.createToken(foundUser);
-            return res.send({ token: jwt, user: foundUser });
+            return res.send({ token: jwt });
           } else {
 
             var params = {
@@ -49,7 +48,7 @@ module.exports = {
             User.create(params).exec(function (err, newUser) {
               if(err) res.negotiate(err);
               var jwt = sailsTokenAuth.createToken(newUser);
-              res.send({ token: jwt, user: newUser });
+              res.send({ token: jwt });
             });
           }
         });
