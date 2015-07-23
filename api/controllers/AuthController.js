@@ -31,7 +31,6 @@ module.exports = {
         if (profile.domain != 'fws.gov' ) {
           return res.forbidden('You must be a Fish and Wildlife Employee to enter.');
         }
-        console.log(profile);
         // Find or Create a user account
         User.findOne({ googleId: profile.id }).exec(function(err, foundUser) {
           if (err) return res.negotiate(err);

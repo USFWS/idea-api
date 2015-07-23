@@ -18,7 +18,7 @@ module.exports = {
 
     name: {
       type: 'string',
-      requried: true
+      required: true
     },
 
     email: {
@@ -37,6 +37,11 @@ module.exports = {
 
     occupation: {
       type: 'string'
+    },
+
+    googleId: {
+      type: 'string',
+      required: true
     },
 
     badges: {
