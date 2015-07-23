@@ -45,7 +45,7 @@ module.exports = {
 
     ideas:{
       collection: 'idea',
-      via: 'user'
+      via: 'creator'
     }
 
   }

@@ -9,6 +9,47 @@ module.exports = {
 
   attributes: {
 
+    title: {
+      type: 'string',
+      required: true,
+      unique: true
+    },
+
+    description: {
+      type: 'string',
+      required: true
+    },
+
+    date: {
+      type: 'date',
+      required: true,
+      defaultsTo: new Date()
+    },
+
+    status: {
+      type: 'string',
+      enum: [
+        'Proposed',
+        'Under Review',
+        'Approved',
+        'Under Development',
+        'Warranted but Precluded',
+        'No Further Action'
+      ],
+      defaultsTo: 'Proposed',
+      required: true
+    },
+
+    creator:{
+      model:'user'
+    }
+
+    // Check that description is at least X characters
+
+    // Check that description is less than 500 characters
+
+    // Check that there are less than 7 badges
+
   }
 };
 
