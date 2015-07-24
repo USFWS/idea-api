@@ -27,6 +27,10 @@ module.exports = {
       unique: true
     },
 
+    about: {
+      type: 'string'
+    },
+
     picture: {
       type: 'string'
     },
@@ -51,7 +55,12 @@ module.exports = {
     ideas:{
       collection: 'idea',
       via: 'creator'
-    }
+    },
+
+    votes: {
+      collection: 'idea',
+      via: 'score'
+    },
 
   }
 };

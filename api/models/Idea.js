@@ -40,6 +40,15 @@ module.exports = {
       required: true
     },
 
+    tags: {
+      type: 'array'
+    },
+
+    score: {
+      collection: 'user',
+      via: 'votes'
+    },
+
     creator:{
       model:'user'
     }
