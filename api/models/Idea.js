@@ -51,6 +51,10 @@ module.exports = {
 
     creator:{
       model:'user'
+    },
+
+    comments: {
+      model: 'comments'
     }
 
     // Check that description is at least X characters

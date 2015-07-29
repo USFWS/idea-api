@@ -52,6 +52,11 @@ module.exports = {
       type: 'array'
     },
 
+    comments: {
+      collection: 'comments',
+      via: 'commentor'
+    },
+
     ideas:{
       collection: 'idea',
       via: 'creator'

@@ -9,6 +9,25 @@ module.exports = {
 
   attributes: {
 
+    body: {
+      type: 'string',
+      required: true
+    },
+
+    flagged: {
+      type: 'boolean'
+    },
+
+    commenter: {
+      collection: 'user',
+      via: 'comments'
+    },
+
+    idea: {
+      collection: 'idea',
+      via: 'ideas'
+    }
+
   }
 };
 
