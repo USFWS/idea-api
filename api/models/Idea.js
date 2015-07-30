@@ -40,21 +40,22 @@ module.exports = {
       required: true
     },
 
-    tags: {
-      type: 'array'
-    },
-
     score: {
       collection: 'user',
       via: 'votes'
     },
 
+    // comments: {
+    //   model: 'comments',
+    //   via: 'idea'
+    // },
+
     creator:{
       model:'user'
     },
 
-    comments: {
-      model: 'comments'
+    tags: {
+      type: 'array'
     }
 
     // Check that description is at least X characters

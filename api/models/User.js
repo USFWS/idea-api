@@ -52,10 +52,10 @@ module.exports = {
       type: 'array'
     },
 
-    comments: {
-      collection: 'comments',
-      via: 'commentor'
-    },
+    // comments: {
+    //   collection: 'comments',
+    //   via: 'commentor'
+    // },
 
     ideas:{
       collection: 'idea',
@@ -65,7 +65,7 @@ module.exports = {
     votes: {
       collection: 'idea',
       via: 'score'
-    },
+    }
 
   }
 };
