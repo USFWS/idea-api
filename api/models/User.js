@@ -52,10 +52,10 @@ module.exports = {
       type: 'array'
     },
 
-    // comments: {
-    //   collection: 'comments',
-    //   via: 'commentor'
-    // },
+    comments: {
+      collection: 'comment',
+      via: 'commenter'
+    },
 
     ideas:{
       collection: 'idea',

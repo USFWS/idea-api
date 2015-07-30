@@ -40,16 +40,19 @@ module.exports = {
       required: true
     },
 
+    // Many-to-many association
     score: {
       collection: 'user',
       via: 'votes'
     },
 
-    // comments: {
-    //   model: 'comments',
-    //   via: 'idea'
-    // },
+    // Many-to-many association
+    comments: {
+      model: 'comment',
+      via: 'idea'
+    },
 
+    // One-to-many association
     creator:{
       model:'user'
     },
