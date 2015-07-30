@@ -40,19 +40,19 @@ module.exports = {
       required: true
     },
 
-    // Many-to-many association
+    // An idea can have many upvotes
     score: {
       collection: 'user',
       via: 'votes'
     },
 
-    // Many-to-many association
+    // An idea can have many comments
     comments: {
-      model: 'comment',
+      collection: 'comment',
       via: 'idea'
     },
 
-    // One-to-many association
+    // An idea can have one creator
     creator:{
       model:'user'
     },

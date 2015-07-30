@@ -52,16 +52,19 @@ module.exports = {
       type: 'array'
     },
 
+    // A user can have many comments
     comments: {
       collection: 'comment',
       via: 'commenter'
     },
 
+    // A user can have many ideas
     ideas:{
       collection: 'idea',
       via: 'creator'
     },
 
+    // A user can have many upvotes
     votes: {
       collection: 'idea',
       via: 'score'

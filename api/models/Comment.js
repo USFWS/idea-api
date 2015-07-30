@@ -8,6 +8,7 @@
 module.exports = {
 
   attributes: {
+
     body: {
       type: 'string',
       required: true
@@ -18,14 +19,14 @@ module.exports = {
       defaultsTo: false
     },
 
+    // A comment can have one commenter
     commenter: {
-      collection: 'user',
-      via: 'comments'
+      model: 'user'
     },
 
+    // A comment can be attached to one idea
     idea: {
-      collection: 'idea',
-      via: 'comments'
+      model: 'idea',
     }
   }
 };
