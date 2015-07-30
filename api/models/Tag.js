@@ -11,7 +11,8 @@ module.exports = {
 
     text: {
       type: 'string',
-      required: true
+      required: true,
+      unique: true
     },
 
     approved: {
