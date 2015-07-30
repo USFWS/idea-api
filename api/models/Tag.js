@@ -15,7 +15,8 @@ module.exports = {
     },
 
     approved: {
-      type: boolean,
+      type: 'boolean',
+      required: true,
       defaultsTo: false
     }
 
