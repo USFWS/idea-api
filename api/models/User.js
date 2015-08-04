@@ -48,6 +48,11 @@ module.exports = {
       required: true
     },
 
+    inTimeout: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+
     badges: {
       type: 'array'
     },
