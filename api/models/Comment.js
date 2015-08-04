@@ -14,9 +14,10 @@ module.exports = {
       required: true
     },
 
-    flagged: {
-      type: 'boolean',
-      defaultsTo: false
+    // A comment can have many flags
+    flags: {
+      collection: 'flag',
+      via: 'comment'
     },
 
     // A comment can have one commenter

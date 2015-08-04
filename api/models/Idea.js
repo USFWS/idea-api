@@ -40,6 +40,10 @@ module.exports = {
       required: true
     },
 
+    tags: {
+      type: 'array'
+    },
+
     // An idea can have many upvotes
     score: {
       collection: 'user',
@@ -52,13 +56,15 @@ module.exports = {
       via: 'idea'
     },
 
+    // An idea can have many flags
+    flags: {
+      collection: 'flag',
+      via: 'idea'
+    },
+
     // An idea can have one creator
     creator:{
       model:'user'
-    },
-
-    tags: {
-      type: 'array'
     }
 
     // Check that description is at least X characters

@@ -57,22 +57,28 @@ module.exports = {
       type: 'array'
     },
 
-    // A user can have many comments
+    // A User can have many comments
     comments: {
       collection: 'comment',
       via: 'commenter'
     },
 
-    // A user can have many ideas
+    // A User can have many ideas
     ideas:{
       collection: 'idea',
       via: 'creator'
     },
 
-    // A user can have many upvotes
+    // A User can have many upvotes
     votes: {
       collection: 'idea',
       via: 'score'
+    },
+
+    // A User can have many flags
+    flags: {
+      collection: 'flag',
+      via: 'flagger'
     }
 
   }

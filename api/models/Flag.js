@@ -28,16 +28,19 @@ module.exports = {
       defaultsTo: false
     },
 
+    // A flag can be created by a single User
     flagger: {
-      //Assocation to User
+      model: 'user'
     },
 
+    // A flag can be associated with one comment
     comment: {
-      //Association to Comment (optional)
+      model: 'comment'
     },
 
+    // A flag can be associated with one Idea
     idea: {
-      //Association to Idea (optional)
+      model: 'idea'
     }
 
   }
