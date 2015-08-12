@@ -9,12 +9,6 @@ module.exports = {
 
   attributes: {
 
-    type: {
-      type: 'string',
-      required: true,
-      enum: ['Idea', 'Comment']
-    },
-
     reason: {
       type: 'string'
     },
