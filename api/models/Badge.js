@@ -18,6 +18,18 @@ module.exports = {
     description: {
       type: 'string',
       required: true
+    },
+
+    approved: {
+      type: 'boolean',
+      required: true,
+      defaultsTo: false
+    },
+
+    // A badge can have many owners
+    owners: {
+      collection: 'user',
+      via: 'badges'
     }
 
   }

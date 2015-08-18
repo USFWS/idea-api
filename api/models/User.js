@@ -53,8 +53,10 @@ module.exports = {
       defaultsTo: false
     },
 
+    // A user can have many badges
     badges: {
-      type: 'array'
+      collection: 'badge',
+      via: 'owners'
     },
 
     // A User can have many comments
@@ -80,6 +82,8 @@ module.exports = {
       collection: 'flag',
       via: 'flagger'
     }
+
+    // Check if badges contains a badge name (Innovator, Inquirer, etc.)
 
   }
 };

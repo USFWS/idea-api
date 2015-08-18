@@ -17,12 +17,19 @@ module.exports = {
 
     description: {
       type: 'string',
+      required: true
     },
 
     approved: {
       type: 'boolean',
       required: true,
       defaultsTo: false
+    },
+
+    // A tag can have many ideas
+    ideas: {
+      collection: 'idea',
+      via: 'tags'
     }
 
   }

@@ -40,8 +40,10 @@ module.exports = {
       required: true
     },
 
+    // An idea can have many tags
     tags: {
-      type: 'array'
+      collection: 'tag',
+      via: 'ideas'
     },
 
     // An idea can have many upvotes
