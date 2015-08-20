@@ -23,7 +23,6 @@ module.exports = {
         return BadgeService.newIdea(user);
       })
       .then(function (results) {
-        console.log(results);
         var innovator = results[0],
           prolific = results[1];
 
@@ -41,27 +40,6 @@ module.exports = {
       .catch(function(error) {
         return res.negotiate(error);
       });
-
-        //   if (!BadgeService.hasBadge(user, 'Innovator')) {
-        //     console.log('No innovator badge');
-        //     Badge.findByName('Innovator').exec(function (err, badge) {
-        //       if (err) return res.negotiate(err);
-
-        //       user.badges.add(badge);
-        //       user.save();
-        //     });
-        //   }
-
-        //   if (user.ideas.length >= 5 && !BadgeService.hasBadge(user, 'Prolific Innovator')) {
-        //     console.log('No prolific innovator badge');
-        //     Badge.findByName('Prolific Innovator').exec(function (err, badge) {
-        //       if (err) return res.negotiate(err);
-
-        //       user.badges.add(badge);
-        //       user.save();
-        //     });
-        //   }
-        // });
   }
 };
 
