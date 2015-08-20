@@ -5,14 +5,20 @@ module.exports = {
 
   newIdea: function(user) {
     var service = BadgeService;
-    return Promise.join(service.innovator(user), service.prolificInnovator(user));
+    return Promise.join(
+      service.innovator(user),
+      service.prolificInnovator(user)
+    );
   },
 
-  // newComment: function() {
-  //   // Check/Award Inquiring badge
-  //   // Check/Award First Responder badge if idea.comments.length === 2
-  //   // Check/Award Fount of Knowledge badge if user.comments.length >= 5
-  // },
+  newComment: function(user, idea) {
+    var service = BadgeService;
+    return Promise.join(
+      service.inquiringMind(user),
+      service.firstResponder(user, idea),
+      service.fountOfKnowledge(user)
+    );
+  },
 
   // newVote: function() {
   //   // Check/Award Investor badge
@@ -50,6 +56,31 @@ module.exports = {
   prolificInnovator: function(user) {
     var badgeName = 'Prolific Innovator';
     if(BadgeService.needsBadge(user, badgeName) && user.ideas.length >= 5) {
+      return Badge.findByName(badgeName);
+    }
+    return false;
+  },
+
+  inquiringMind: function(user) {
+    var badgeName = 'Inquiring Mind';
+    if(BadgeService.needsBadge(user, badgeName)) {
+      return Badge.findByName(badgeName);
+    }
+    return false;
+  },
+
+  firstResponder: function(user, comments) {
+    var badgeName = 'First Responder';
+    // Second person to comment
+    if(BadgeService.needsBadge(user, badgeName) && comments.length === 2) {
+      return Badge.findByName(badgeName);
+    }
+    return false;
+  },
+
+  fountOfKnowledge: function(user) {
+    var badgeName = 'Fount of Knowledge';
+    if(BadgeService.needsBadge(user, badgeName) && user.comments.length >= 5) {
       return Badge.findByName(badgeName);
     }
     return false;
