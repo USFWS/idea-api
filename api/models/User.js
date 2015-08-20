@@ -81,9 +81,27 @@ module.exports = {
     flags: {
       collection: 'flag',
       via: 'flagger'
-    }
+    },
 
-    // Check if badges contains a badge name (Innovator, Inquirer, etc.)
+    subscriptions: {
+      type: 'json',
+      defaultsTo: {
+        tags: {
+          inApp: true,
+          email: true,
+          items: []
+        },
+        ideas: {
+          inApp: true,
+          email: true,
+          items: []
+        },
+        badges: {
+          inApp: true,
+          email: false
+        }
+      }
+    }
 
   }
 };
