@@ -31,10 +31,7 @@ module.exports = {
       enum: [
         'Proposed',
         'Under Review',
-        'Approved',
-        'Under Development',
-        'Warranted but Precluded',
-        'No Further Action'
+        'Response Received'
       ],
       defaultsTo: 'Proposed',
       required: true
@@ -75,6 +72,37 @@ module.exports = {
 
     // Check that there are less than 7 badges
 
-  }
+  },
+
+    afterCreate: function(idea, cb) {
+      User.findOne({ id: idea.creator })
+        .then(function (user) {
+          user.subscriptions.ideas.items.push(idea.id);
+          user.save();
+          cb();
+        })
+        .catch(function (error) {
+          cb(error);
+        });
+      // Add idea ID to user's subscriptions
+    },
+
+    afterDestroy: function(idea, cb) {
+      var idea = idea[0];
+      User.findOne({ id: idea.creator })
+        .then(function (user) {
+          var items = user.subscriptions.ideas.items,
+            index = items.indexOf(idea.id);
+
+          if (index > -1) {
+            user.subscriptions.ideas.items.splice(index, 1);
+            user.save();
+          }
+          cb();
+        })
+        .catch(function (error) {
+          cb(error);
+        });
+    }
 };
 
