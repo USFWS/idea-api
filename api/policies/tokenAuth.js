@@ -41,7 +41,7 @@ module.exports = function (req, res, next) {
       });
     }
 
-    req.user = user;
+    req.user = user[0];
     next();
   });
 };
