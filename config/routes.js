@@ -42,4 +42,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  'POST /subscribe/:type/:id': 'UserController.subscribe',
+  'GET /user/notifications': 'UserController.notifications',
+  'POST /notification/global': 'NotificationController.global'
 };
