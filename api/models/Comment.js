@@ -29,6 +29,20 @@ module.exports = {
     idea: {
       model: 'idea',
     }
+  },
+
+  afterCreate: function(comment, cb) {
+    Idea.findOne({ id: comment.idea })
+      .populate('subscribers').then(function (idea) {
+      if (!_.findWhere(idea.subscribers, { id: comment.commenter })) {
+        idea.subscribers.add(comment.commenter);
+        idea.save();
+      }
+      cb();
+    }).catch(function (err) {
+      console.log('Catch: ',err);
+      return cb(err);
+    });
   }
 };
 

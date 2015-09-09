@@ -43,12 +43,7 @@ module.exports = {
       type: 'string'
     },
 
-    googleId: {
-      type: 'string',
-      required: true
-    },
-
-    inTimeout: {
+    probation: {
       type: 'boolean',
       defaultsTo: false
     },
@@ -83,18 +78,34 @@ module.exports = {
       via: 'flagger'
     },
 
+    // A User can subscribe to many ideas
+    ideaSubscriptions: {
+      collection: 'idea',
+      via: 'subscribers'
+    },
+
+    // A User can subscribe to many tags
+    tagSubscriptions: {
+      collection: 'tag',
+      via: 'subscribers'
+    },
+
+    // A User can have many notifications
+    notifications: {
+      collection: 'message',
+      via: 'user'
+    },
+
     subscriptions: {
       type: 'json',
       defaultsTo: {
         tags: {
           inApp: true,
-          email: true,
-          items: []
+          email: false
         },
         ideas: {
           inApp: true,
-          email: true,
-          items: []
+          email: false
         },
         badges: {
           inApp: true,

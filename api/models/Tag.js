@@ -30,6 +30,12 @@ module.exports = {
     ideas: {
       collection: 'idea',
       via: 'tags'
+    },
+
+    // A tag can have many subscribers
+    subscribers: {
+      collection: 'user',
+      via: 'tagSubscriptions'
     }
 
   }

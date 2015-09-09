@@ -20,12 +20,6 @@ module.exports = {
       required: true
     },
 
-    date: {
-      type: 'date',
-      required: true,
-      defaultsTo: new Date()
-    },
-
     status: {
       type: 'string',
       enum: [
@@ -64,6 +58,12 @@ module.exports = {
     // An idea can have one creator
     creator:{
       model:'user'
+    },
+
+    // An idea can have many subscribers
+    subscribers: {
+      collection: 'user',
+      via: 'ideaSubscriptions'
     }
 
     // Check that description is at least X characters
@@ -74,35 +74,32 @@ module.exports = {
 
   },
 
-    afterCreate: function(idea, cb) {
-      User.findOne({ id: idea.creator })
-        .then(function (user) {
-          user.subscriptions.ideas.items.push(idea.id);
-          user.save();
-          cb();
-        })
-        .catch(function (error) {
-          cb(error);
-        });
-      // Add idea ID to user's subscriptions
-    },
+  afterCreate: function(idea, cb) {
 
-    afterDestroy: function(idea, cb) {
-      var idea = idea[0];
-      User.findOne({ id: idea.creator })
-        .then(function (user) {
-          var items = user.subscriptions.ideas.items,
-            index = items.indexOf(idea.id);
+    // Subscribe creator to their new idea
+    User.findOne({ id: idea.creator })
+      .then(function (user) {
+        user.ideaSubscriptions.add(idea.id);
+        user.save();
+        cb();
+      })
+      .catch(function (error) {
+        cb(error);
+      });
 
-          if (index > -1) {
-            user.subscriptions.ideas.items.splice(index, 1);
-            user.save();
-          }
-          cb();
-        })
-        .catch(function (error) {
-          cb(error);
-        });
-    }
+    // Loop through idea tags, notifiy subscribers
+  },
+
+  afterDestroy: function(idea, cb) {
+    User.findOne({ id: idea[0].creator })
+      .then(function (user) {
+
+        user.ideaSubscriptions.remove(idea.id);
+        cb();
+      })
+      .catch(function (error) {
+        cb(error);
+      });
+  }
 };
 
