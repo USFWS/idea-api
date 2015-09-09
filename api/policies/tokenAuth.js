@@ -41,6 +41,7 @@ module.exports = function (req, res, next) {
       });
     }
 
+    // Return a single user, not an array of users
     req.user = user[0];
     next();
   });
