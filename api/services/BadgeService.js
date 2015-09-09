@@ -4,19 +4,29 @@ var Promise = require('bluebird');
 module.exports = {
 
   newIdea: function(user) {
-    var service = BadgeService;
     return Promise.join(
-      service.innovator(user),
-      service.prolificInnovator(user)
-    );
+      BadgeService.innovator(user),
+      BadgeService.prolificInnovator(user)
+    ).then(function (results) {
+      var badges = [];
+
+      _.each(results, function(result) {
+        if (result) {
+          user.badges.add(result);
+          user.save();
+          badges.push(result);
+        }
+      });
+
+      return badges;
+    });
   },
 
-  newComment: function(user, idea) {
-    var service = BadgeService;
+  newComment: function(user) {
     return Promise.join(
-      service.inquiringMind(user),
-      service.firstResponder(user, idea),
-      service.fountOfKnowledge(user)
+      BadgeService.inquiringMind(user),
+      BadgeService.firstResponder(user),
+      BadgeService.fountOfKnowledge(user)
     );
   },
 
@@ -69,10 +79,10 @@ module.exports = {
     return false;
   },
 
-  firstResponder: function(user, comments) {
+  firstResponder: function(user) {
     var badgeName = 'First Responder';
     // Second person to comment
-    if(BadgeService.needsBadge(user, badgeName) && comments.length === 2) {
+    if(BadgeService.needsBadge(user, badgeName) && user.comments.length === 2) {
       return Badge.findByName(badgeName);
     }
     return false;
