@@ -36,7 +36,12 @@ module.exports.policies = {
   ***************************************************************************/
 
   'IdeaController': {
-    'destroy': ['tokenAuth', 'canDeleteIdea']
+    'create': ['tokenAuth', 'isNotOnProbation'],
+    'destroy': ['tokenAuth', 'isNotOnProbation', 'canDeleteIdea']
+  },
+
+  'UserController': {
+    '*': ['tokenAuth']
   }
 
   // RabbitController: {
